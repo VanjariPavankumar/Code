@@ -1,0 +1,902 @@
+(INNER) JOIN: Returns records that have matching values in both tables
+LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+PRIMARY KEY: The PRIMARY KEY constraint uniquely identifies each record in a table. Unique data,cannot have null value,no duplicate value for a primary key,A table can contain only one primary key constraint..
+FORIEGN KEY  = 1)a foreign key is used link two tables together ..
+                            2)values of unique key is should not be duplicate
+                            3)like if we have two table student and one more table stdreport tabel we have to be same ineteger value or varchar values to be same in that column.
+DISTINCT CLAUSE :1) it is used to remove the duplicate records / row  from the table
+                                2)it is only used with select statement  
+UNION : 1)The UNION operator is used to combine the result-set of two or more SELECT statements.
+               2) Every SELECT statement within UNION must have the same number of columns
+               3)The columns must also have similar data types
+               4)The columns in every SELECT statement must also be in the same order
+UNION ALL:
+               1) The SQL Union ALL Operator is the same as the UNION operator, but the only difference is that UNION ALL operator also shows the common rows in the result.
+SUBQUERY:  
+               1) a Subquery can be simply defined as a query within another query. 
+               2) In other words we can say that a Subquery is a query that is embedded in WHERE clause of another SQL query. 
+               3) Subquery must be enclosed in parentheses
+INSERT:DML
+              1) This SQL statement inserts the data or records in the existing table of the SQL database. This statement can easily insert single and multiple records in a single query statement.
+DELETE :
+               1)The SQL DELETE statement is used to delete rows from a table. Generally, DELETE statement removes one or more records form a table.
+UPDATE:
+              1)This SQL statement changes or modifies the stored data in the SQL database.
+CREATE: DDL
+             1)This SQL statement creates the new table in the SQL database.
+ALTER:
+             1)This SQL statement adds, deletes, and modifies the columns of the table in the SQL database.
+DROP :
+             1)This SQL statement deletes or removes the table and the structure, views, permissions, and triggers associated with that table. If we drop that anything we will not retrive that data.
+TRUNCATE:
+             1)After truncating a table, you won't be able to retrieve the data using standard means. The data is essentially gone, and the table is left empty
+GRANT AND REVOKE- DCL  :
+            1) The GRANT command is used for permitting the users whereas the REVOKE command is used for removing the authorization.
+COMMIT:TCL
+             1)This SQL statement saves the changes permanently, which are done in the transaction of the SQL database.
+ROLLBACK:
+            1)this SQL statement undo the transactions and operations which are not yet saved to the SQL database.
+SAVEPOINT:
+            1)Savepoint is a command in SQL that is used with the rollback command.
+            2)It is a command in Transaction Control Language that is used to mark the transaction in a table.
+RENAME: 
+              1)In some situations, database administrators and users want to change the name of the table in the SQL database because they want to give a more relevant name to the table.
+              2)Any database user can easily change the name by using the RENAME TABLE and ALTER TABLE statement in Structured Query Language.
+                                    RENAME Employee To Coding_Employees ; 
+Difference between DELETE and TRUNCATE statements
+                1)There is a slight difference b/w delete and truncate statement. The DELETE statement only deletes the rows from the table based on the condition defined by WHERE clause or delete all the                                                                                                
+                        rows from the table when condition is not specified.But it does not free the space containing by the table  
+               2)The TRUNCATE statement: it is used to delete all the rows from the table and free the containing space.
+DESCRIBE: 
+            1)This SQL statement tells something about the specified table or view in the query.
+DISTINCT:
+            1)This SQL statement shows the distinct values from the specified columns of the database table. This statement is used with the SELECT keyword.
+GROUP BY :
+          1)The Group By statement is used for organizing similar data into groups.
+          2)The SELECT statement is used with the GROUP BY clause in the SQL query.WHERE clause is placed before the GROUP BY clause in SQL.ORDER BY clause is placed after the GROUP BY clause in SQL.
+ROWNUM : 
+          1)Syntax of ROWNUM keyword in WHERE Clause in Oracle database
+          2)SELECT * FROM STUDENTS WHERE ROWNUM <= 3;  
+RANDOM :
+         1) The SQL SELECT RANDOM() function returns the random row  
+         2) SELECT column FROM  (SELECT column FROM table  ORDER BY dbms_random.value) WHERE rownum =1  
+IN :
+        1) SQL IN is an operator used in a SQL query to help reduce the need to use multiple SQL "OR" conditions.
+        2) SELECT *  FROM students WHERE students_name IN ( Amit , Raghav, Rajeev) ;
+
+DATE:
+       1)SQL SELECT DATE is used to retrieve a date from a database. If you want to find a particular date from a database, you can use this statement.
+      2)SELECT * FROM   table-name WHERE your date-column >= '2013-12-12'  
+      3) ALTER TABLE TABLE NAME ADD COLUMN DOB DATE;
+ORDER :
+       1) Using the ORDER BY clause, we can sort the records in ascending or descending order as per our requirement.
+        2) Whenever we want to sort the records based on the columns stored in the tables of the SQL database, then we consider using the ORDER BY clause in SQL
+
+SQL> select * from stdreport;
+
+     STDID STDNAME                   STDMARKS
+---------- ------------------------- -------------------------
+         4 Pavan                     99
+         5 Sridher                   87
+         6 Srikanth                  78
+         7 Praveen                   88
+         8 Laxman                    67
+
+SQL> select * from stddata;
+
+     STDID STDCLASS   DEPT
+---------- ---------- --------------------
+         1 10A        Science
+         2 10B        Mathematics
+         3 9C         History
+         4 11A        Physics
+         5 12G        English
+
+
+
+SQL> select  * from students;
+
+     STDID STDNAME                        STDSUBJECT                       STDMARKS STDPHONENO
+---------- ------------------------------ ------------------------------ ---------- ------------------------------
+         1 pavan                          ECE                                    72 7036144669
+         2 sravan                         IT                                     88 9381931853
+         3 kiran                          CSE                                    98 8499858656
+         4 kushal                         EEE                                    83 8008568065
+         5 sonu                           ETC                                    66 9989755513
+
+
+
+
+(INNER) JOIN: Returns records that have matching values in both tables
+
+
+
+SQL> select * from students inner join stddata on students.stdid = stddata.stdid;
+
+     STDID STDNAME                        STDSUBJECT                       STDMARKS STDPHONENO                          STDID STDCLASS   DEPT
+---------- ------------------------------ ------------------------------ ---------- ------------------------------ ---------- ---------- --------------------
+         1 pavan                          ECE                                    72 7036144669                              1 10A        Science
+         2 sravan                         IT                                     88 9381931853                              2 10B        Mathematics
+         3 kiran                          CSE                                    98 8499858656                              3 9C         History
+         4 kushal                         EEE                                    83 8008568065                              4 11A        Physics
+         5 sonu                           ETC                                    66 9989755513                              5 12G        English
+
+
+
+
+
+SQL> select * from stddata inner join stdreport on stddata.stdid = stdreport.stdid;
+
+     STDID STDCLASS   DEPT                      STDID STDNAME                   STDMARKS
+---------- ---------- -------------------- ---------- ------------------------- -------------------------
+         4 11A        Physics                       4 Pavan                     99
+         5 12G        English                       5 Sridher                   87
+
+
+LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+
+SQL> select * from stddata left join  stdreport on  stddata.stdid = stdreport.stdid;
+
+     STDID STDCLASS   DEPT                      STDID STDNAME                   STDMARKS
+---------- ---------- -------------------- ---------- ------------------------- -------------------------
+         4 11A        Physics                       4 Pavan                     99
+         5 12G        English                       5 Sridher                   87
+         3 9C         History
+         1 10A        Science
+         2 10B        Mathematics
+
+
+
+
+
+SQL> select stddata.stdid,stddata.dept,stdreport.stdname,stdreport.stdmarks from stddata left join stdreport on stddata.stdid = stdreport.stdid order by stdid;
+
+     STDID DEPT                 STDNAME                   STDMARKS
+---------- -------------------- ------------------------- -------------------------
+         1 Science
+         2 Mathematics
+         3 History
+         4 Physics              Pavan                     99
+         5 English              Sridher                   87
+
+
+SQL> select * from students inner join stddata on students.stdid = stddata.stdid;
+
+     STDID STDNAME                        STDSUBJECT                       STDMARKS STDPHONENO                          STDID STDCLASS   DEPT
+---------- ------------------------------ ------------------------------ ---------- ------------------------------ ---------- ---------- --------------------
+         3 kiran                          CSE                                    98 8499858656                              3 9C         History
+         4 kushal                         EEE                                    83 8008568065                              4 11A        Physics
+         5 sonu                           ETC                                    66 9989755513                              5 12G        English
+
+
+
+
+
+
+
+RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+
+
+SQL> select * from stddata right join stdreport on stddata.stdid = stdreport.stdid order by stddata.stdid;
+
+     STDID STDCLASS   DEPT                      STDID STDNAME                   STDMARKS
+---------- ---------- -------------------- ---------- ------------------------- -------------------------
+         4 11A        Physics                       4 Pavan                     99
+         5 12G        English                       5 Sridher                   87
+                                                    7 Praveen                   88
+                                                    8 Laxman                    67
+                                                    6 Srikanth                  78
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+
+
+
+SQL> select * from stddata full join stdreport on stddata.stdid = stdreport.stdid  order by stddata.stdid asc;
+
+     STDID STDCLASS   DEPT                      STDID STDNAME                   STDMARKS
+---------- ---------- -------------------- ---------- ------------------------- -------------------------
+         1 10A        Science
+         2 10B        Mathematics
+         3 9C         History
+         4 11A        Physics                       4 Pavan                     99
+         5 12G        English                       5 Sridher                   87
+                                                    6 Srikanth                  78
+                                                    7 Praveen                   88
+                                                    8 Laxman                    67
+
+
+
+SQL> select* from stddata full outer join students on stddata.stdid = students.stdid order by stddata.stdid;
+
+     STDID STDCLASS   DEPT                      STDID STDNAME                        STDSUBJECT                       STDMARKS STDPHONENO
+---------- ---------- -------------------- ---------- ------------------------------ ------------------------------ ---------- ------------------------------
+         1 10A        Science
+         2 10B        Mathematics
+         3 9C         History                       3 kiran                          CSE                                    98 8499858656
+         4 11A        Physics                       4 kushal                         EEE                                    83 8008568065
+         5 12G        English                       5 sonu                           ETC                                    66 9989755513
+                                                   10 pavan                          ECE                                    72 7036144669
+                                                   11 sravan                         IT                                     88 9381931853
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+creating the table
+
+
+SQL> create table stddata(stdid int,stdclass varchar(10),dept varchar(20));
+
+Table created.
+
+
+inserting the table 
+
+SQL> insert into stddata (stdid ,stdclass,dept) values (1,'10A','Science');
+
+1 row created.
+
+SQL> insert into stddata (stdid ,stdclass,dept) values (2,'10B','Mathematics')
+  2  ;
+
+1 row created.
+
+SQL> insert into stddata (stdid ,stdclass,dept) values (3,'9C','History');
+
+1 row created.
+
+SQL> insert into stddata (stdid ,stdclass,dept) values (4,'11A','Physics');
+
+1 row created.
+
+SQL> insert into stddata (stdid ,stdclass,dept) values (5,'12G','English');
+
+1 row created.
+
+SQL> select * from stddata;
+
+     STDID STDCLASS   DEPT
+---------- ---------- --------------------
+         1 10A        Science
+         2 10B        Mathematics
+         3 9C         History
+         4 11A        Physics
+         5 12G        English
+
+
+
+
+
+second table
+
+
+SQL> create table stdreport (stdid int,stdname varchar(25),stdmarks varchar(25));
+
+Table created.
+
+SQL> insert into stdreport (stdid ,stdname,stdmarks) values (4,'Pavan','99');
+
+1 row created.
+
+SQL> insert into stdreport (stdid ,stdname,stdmarks) values (5,'Sridher','87');
+
+1 row created.
+
+SQL> insert into stdreport (stdid ,stdname,stdmarks) values (6,'Srikanth','78');
+
+1 row created.
+
+SQL> insert into stdreport (stdid ,stdname,stdmarks) values (7,'Praveen','88');
+
+1 row created.
+
+SQL> insert into stdreport (stdid ,stdname,stdmarks) values (8,'Laxman','67');
+
+1 row created.
+
+SQL> select * from stdreport;
+
+     STDID STDNAME                   STDMARKS
+---------- ------------------------- -------------------------
+         4 Pavan                     99
+         5 Sridher                   87
+         6 Srikanth                  78
+         7 Praveen                   88
+         8 Laxman                    67
+
+INNER JOIN 
+==============
+
+
+SQL> select * from stddata inner join stdreport on stddata.stdid = stdreport.stdid;
+
+     STDID STDCLASS   DEPT                      STDID STDNAME                   STDMARKS
+---------- ---------- -------------------- ---------- ------------------------- -------------------------
+         4 11A        Physics                       4 Pavan                     99
+         5 12G        English                       5 Sridher                   87
+
+
+
+SQL> select stddata.stdid,stdreport.stdname,stddata.stdclass,stddata.dept,stdreport.stdmarks from stddata inner join stdreport on stddata.stdid = stdreport.stdid;
+
+     STDID STDNAME                   STDCLASS   DEPT                 STDMARKS
+---------- ------------------------- ---------- -------------------- -------------------------
+         4 Pavan                     11A        Physics              99
+         5 Sridher                   12G        English              87
+
+not null
+=====
+SQL> select * from stddata inner join stdreport on stddata.stdid = stdreport.stdid where stdreport.stdid is  null;
+
+no rows selected
+
+
+
+using null 
+=======
+SQL> select * from stddata inner join stdreport on stddata.stdid = stdreport.stdid where stdreport.stdid is not null;
+
+     STDID STDCLASS   DEPT                      STDID STDNAME                   STDMARKS
+---------- ---------- -------------------- ---------- ------------------------- -------------------------
+         4 11A        Physics                       4 Pavan                     99
+         5 12G        English                       5 Sridher                   87
+
+
+
+
+
+
+left join
+=======
+
+
+SQL> select stddata.stdid,stddata.dept,stdreport.stdname,stdreport.stdmarks from stddata left join stdreport on stddata.stdid = stdreport.stdid order by stdid;
+
+     STDID DEPT                 STDNAME                   STDMARKS
+---------- -------------------- ------------------------- -------------------------
+         1 Science
+         2 Mathematics
+         3 History
+         4 Physics              Pavan                     99
+         5 English              Sridher                   87
+
+
+
+
+
+
+
+union
+=====
+The UNION operator is used to combine the result-set of two or more SELECT statements.
+
+Every SELECT statement within UNION must have the same number of columns
+The columns must also have similar data types
+The columns in every SELECT statement must also be in the same order
+
+
+SQL> select * from new_worker;
+
+ WORKER_ID WORKER_NAME                              WORKER_AGE WORKER_SALARY
+---------- ---------------------------------------- ---------- -------------
+       201 Jack                                             28         45000
+       202 Berry                                            29         35000
+       203 Ritik                                            26         29000
+       204 Shyam                                            27         26000
+       205 Ritika                                           28         38000
+       106 Yash                                             29         28000
+
+6 rows selected.
+
+SQL> select * from old_worker;
+
+ WORKER_ID WORKER_NAME                              WORKER_AGE WORKER_SALARY
+---------- ---------------------------------------- ---------- -------------
+       101 Akhil                                            28         25000
+       102 Abhay                                            28         25000
+       103 Souya                                            26         29000
+       104 Abhishek                                         27         26000
+       105 Ritik                                            26         29000
+       106 Yash                                             29         28000
+
+
+
+
+SQL> select * from new_worker union select * from old_worker;
+
+ WORKER_ID WORKER_NAME                              WORKER_AGE WORKER_SALARY
+---------- ---------------------------------------- ---------- -------------
+       101 Akhil                                            28         25000
+       102 Abhay                                            28         25000
+       103 Souya                                            26         29000
+       104 Abhishek                                         27         26000
+       105 Ritik                                            26         29000
+       106 Yash                                             29         28000
+       201 Jack                                             28         45000
+       202 Berry                                            29         35000
+       203 Ritik                                            26         29000
+       204 Shyam                                            27         26000
+       205 Ritika                                           28         38000
+
+11 rows selected.
+
+
+with where clause
+============
+SQL> select * from new_worker where worker_salary >= 29000 union select * from old_worker where worker_salary >= 29000;
+
+ WORKER_ID WORKER_NAME                              WORKER_AGE WORKER_SALARY
+---------- ---------------------------------------- ---------- -------------
+       103 Souya                                            26         29000
+       105 Ritik                                            26         29000
+       201 Jack                                             28         45000
+       202 Berry                                            29         35000
+       203 Ritik                                            26         29000
+       205 Ritika                                           28         38000
+
+6 rows selected.
+
+USING THE ORDER BY STATEMENT
+SQL> select worker_name from new_worker union select worker_name from old_worker order by worker_name;
+
+WORKER_NAME
+----------------------------------------
+Abhay
+Abhishek
+Akhil
+Berry
+Jack
+Ritik
+Ritika
+Shyam
+Souya
+Yash
+
+10 rows selected.
+
+
+
+UNION ALL
+========
+The SQL Union ALL Operator is the same as the UNION operator, but the only difference is that UNION ALL operator also shows the common rows in the result.
+
+
+
+SQL> select * from new_worker union all select * from old_worker;
+
+ WORKER_ID WORKER_NAME                              WORKER_AGE WORKER_SALARY
+---------- ---------------------------------------- ---------- -------------
+       201 Jack                                             28         45000
+       202 Berry                                            29         35000
+       203 Ritik                                            26         29000
+       204 Shyam                                            27         26000
+       205 Ritika                                           28         38000
+       106 Yash                                             29         28000
+       101 Akhil                                            28         25000
+       102 Abhay                                            28         25000
+       103 Souya                                            26         29000
+       104 Abhishek                                         27         26000
+       105 Ritik                                            26         29000
+       106 Yash                                             29         28000
+
+12 rows selected.
+
+
+
+The SQL GROUP BY Statement
+=====================
+The GROUP BY statement groups rows that have the same values into summary rows, like "find the number of customers in each country".
+
+SQL> select job ,count(sal) from emp group by job;
+
+JOB       COUNT(SAL)
+--------- ----------
+CLERK                   4
+SALESMAN           3
+PRESIDENT           1
+MANAGER            3
+ANALYST              2
+software               1
+
+The Average of each salary by job 
+==========================
+SQL> select job ,avg(sal) from emp group by job;
+
+JOB         AVG(SAL)
+--------- ----------
+CLERK         1037.5
+SALESMAN  1333.33333
+PRESIDENT       5000
+MANAGER   2758.33333
+ANALYST         3000
+software        8870
+
+6 rows selected.
+
+
+
+SQL> select job ,avg (sal) as average_sal  from emp group by job;
+
+JOB       AVERAGE_SAL
+--------- -----------
+CLERK          1037.5
+SALESMAN   1333.33333
+PRESIDENT        5000
+MANAGER    2758.33333
+ANALYST          3000
+software         8870
+
+6 rows selected.
+
+
+SUB QUERY  :
+=======
+
+SQL> select sum (sal) as total_sal from (select sal from emp where ename in ('SMITH','WARD')) ;
+
+ TOTAL_SAL
+----------
+      2050
+
+
+SQL> select empno ,ename from emp where sal in (select sal from emp where job = 'MANAGER');
+
+     EMPNO ENAME
+---------- ----------
+      7566 JONES
+      7698 BLAKE
+      7782 CLARK
+
+
+with using WHERE clause
+==================
+
+SQL> select * from  emp where empno in  (select empno from emp where sal>2000 );
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT     ANALYST         7566 09-DEC-82       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7902 FORD      ANALYST         7566 03-DEC-81       3000                    20
+      7500 pavan      software        7824 22-DEC-22       8870                    20
+
+7 rows selected.
+
+SQL> select * from  emp where empno in  (select empno from emp where sal>2000  and sal<4000);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+DELETE
+=====
+
+
+SQL> delete from emp where sal = 3000;
+
+2 rows deleted.
+
+RENAME
+======
+
+SQL> SELECT * FROM STUDENTS;
+
+STDFACULTY                     STDSUBJECTS                      STDMARKS STDPHONENO                          STDID STDPERCENTAGE
+------------------------------ ------------------------------ ---------- ------------------------------ ---------- ------------------------------
+sravan                         IT                                     88 9381931853                              1 80
+kiran                          CSE                                    98 8499858656                              2 88
+kushal                         EEE                                    83 8008568065                              3 77
+sonu                           ETC                                    66 9989755513                              4 65
+pavan                          ECE                                    77 7036144669                              5 83
+
+
+
+
+SQL> RENAME STUDENTS TO STUDENT_DATA;
+
+Table renamed.
+
+SQL> SELECT * FROM STUDENT_DATA;
+
+STDFACULTY                     STDSUBJECTS                      STDMARKS STDPHONENO                          STDID STDPERCENTAGE
+------------------------------ ------------------------------ ---------- ------------------------------ ---------- ------------------------------
+sravan                         IT                                     88 9381931853                              1 80
+kiran                          CSE                                    98 8499858656                              2 88
+kushal                         EEE                                    83 8008568065                              3 77
+sonu                           ETC                                    66 9989755513                              4 65
+pavan                          ECE                                    77 7036144669                              5 83
+
+
+SQL> RENAME STUDENTS TO STUDENT_DATA;
+
+Table renamed.
+
+SQL> SELECT * FROM STUDENT_DATA;
+
+STDFACULTY                     STDSUBJECTS                      STDMARKS STDPHONENO                          STDID STDPERCENTAGE
+------------------------------ ------------------------------ ---------- ------------------------------ ---------- ------------------------------
+sravan                         IT                                     88 9381931853                              1 80
+kiran                          CSE                                    98 8499858656                              2 88
+kushal                         EEE                                    83 8008568065                              3 77
+sonu                           ETC                                    66 9989755513                              4 65
+pavan                          ECE                                    77 7036144669                              5 83
+
+
+
+
+TRUNCATE
+========
+
+
+
+SQL> select * from manages;
+
+EMPLOYEEID  MANAGERID
+---------- ----------
+      1111       2222
+      3333       4444
+      5555       6666
+      7777       8888
+      9999       9998
+
+SQL> TRUNCATE TABLE MANAGES;
+
+Table truncated.
+
+SQL> select * from manages;
+
+no rows selected
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> select * from manages;
+
+no rows selected
+
+
+UPDATE:
+======
+SQL> select * from stddata;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR
+---------- -------------------- ---------- -------------------- ---------
+         1 Ram                          88 Delhi                07-JAN-23
+         2 Sam                          98 Gurgram              01-OCT-23
+         3 Jan                          78 Chennai              06-NOV-00
+         3 Pan                          88 Pune                 09-JAN-00
+        15 Ran                          58 Mumbai               26-DEC-01
+
+SQL> update stddata set  id = 4 where name = 'Pan';
+
+1 row updated.
+
+SQL> select * from stddata;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR
+---------- -------------------- ---------- -------------------- ---------
+         1 Ram                          88 Delhi                07-JAN-23
+         2 Sam                          98 Gurgram              01-OCT-23
+         3 Jan                          78 Chennai              06-NOV-00
+         4 Pan                          88 Pune                 09-JAN-00
+        15 Ran                          58 Mumbai               26-DEC-01
+
+DELETE :
+======
+SQL> delete stddata where percentage = 58;
+
+1 row deleted.
+
+SQL> select * from stddata;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR
+---------- -------------------- ---------- -------------------- ---------
+         1 Ram                          88 Delhi                07-JAN-23
+         2 Sam                          98 Gurgram              01-OCT-23
+         3 Jan                          78 Chennai              06-NOV-00
+         4 Pan                          88 Pune                 09-JAN-00
+
+INSERT:
+SQL> insert into stddata (id ,name , percentage, location, dateofbirth) values(6,'Zan',76,'Banglore','01-Feb-1998');
+
+1 row created.
+
+SQL> select * from stddata;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR
+---------- -------------------- ---------- -------------------- ---------
+         1 Ram                          88 Delhi                07-JAN-23
+         2 Sam                          98 Gurgram              01-OCT-23
+         3 Jan                          78 Chennai              06-NOV-00
+         4 Pan                          88 Pune                 09-JAN-00
+         5 Ran                          58 Mumbai               26-DEC-01
+         6 Zan                          76 Banglore             01-FEB-98
+
+6 rows selected.
+
+
+CREATE
+====
+CREATE TABLE Employee_details(  Emp_Id NUMBER(4) NOT NULL,  First_name VARCHAR(30), Last_name VARCHAR(30),   Salary Money,  City VARCHAR(30),   PRIMARY KEY (Emp_Id));  
+
+
+ALTER
+=====
+
+BY USING THE ADD STATEMENT
+
+SQL> ALTER TABLE STDDATA ADD FEES INT;
+
+Table altered.
+
+SQL> select * from stddata;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR     FEES
+---------- -------------------- ---------- -------------------- --------  --------------
+         1 Ram                          88 Delhi                07-JAN-23
+
+
+         2 Sam                          98 Gurgram              01-OCT-23
+
+
+         3 Jan                          78 Chennai              06-NOV-00
+
+
+         4 Pan                          88 Pune                 09-JAN-00
+
+
+         5 Ran                          58 Mumbai               26-DEC-01
+
+
+         6 Zan                          76 Banglore             01-FEB-98
+
+
+
+6 rows selected.
+RENAME
+USING THE RENAME STATEMENT WE CAN CHANGE THE COLUMN NAME
+
+SQL> ALTER TABLE STDDATA RENAME COLUMN FEES TO FEE;
+
+Table altered.
+
+SQL> select * from stddata;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR        FEE
+---------- -------------------- ---------- -------------------- --------- ----------
+         1 Ram                          88 Delhi                07-JAN-23     100000
+         2 Sam                          98 Gurgram              01-OCT-23     200000
+         3 Jan                          78 Chennai              06-NOV-00     250000
+         4 Pan                          88 Pune                 09-JAN-00     370000
+         5 Ran                          58 Mumbai               26-DEC-01     890000
+         6 Zan                          76 Banglore             01-FEB-98     900000
+
+6 rows selected.
+
+
+
+
+BY USING THE DROP STATEMENT 
+
+SQL> ALTER TABLE STDDATA DROP COLUMN FEE;
+
+Table altered.
+
+SQL> select * from stddata;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR
+---------- -------------------- ---------- -------------------- ---------
+         1 Ram                          88 Delhi                07-JAN-23
+         2 Sam                          98 Gurgram              01-OCT-23
+         3 Jan                          78 Chennai              06-NOV-00
+         4 Pan                          88 Pune                 09-JAN-00
+         5 Ran                          58 Mumbai               26-DEC-01
+         6 Zan                          76 Banglore             01-FEB-98
+
+6 rows selected.
+
+ DESCRIBE
+=========
+
+SQL> desc stddata;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ID                                                             NUMBER(38)
+ NAME                                                           VARCHAR2(20)
+ PERCENTAGE                                                     NUMBER(38)
+ LOCATION                                                       VARCHAR2(20)
+ DATEOFBIRTH                                                    DATE
+ FEES                                                           NUMBER(38)
+
+
+DISTINCT
+========
+SQL> SELECT DISTINCT PERCENTAGE,MIN(NAME) AS NAMA FROM STDDATA GROUP BY PERCENTAGE;
+
+PERCENTAGE NAMA
+---------- --------------------
+        78 Jan
+        76 Zan
+        88 Pan
+        58 Ran
+        98 Sam
+
+ROLLBACK
+=======
+SQL> DELETE FROM STDDATA WHERE ID = 5;
+
+1 row deleted.
+
+SQL> SELECT * FROM STDDATA;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR       FEES
+---------- -------------------- ---------- -------------------- --------- ----------
+         1 Ram                          88 Delhi                07-JAN-23     100000
+         2 Sam                          98 Gurgram              01-OCT-23     200000
+         3 Jan                          78 Chennai              06-NOV-00     500000
+         4 Pan                          88 Pune                 09-JAN-00     450000
+         6 Zan                          76 Banglore             01-FEB-98     650000
+
+SQL> ROLLBACK
+  2  ;
+
+Rollback complete.
+
+SQL> SELECT * FROM STDDATA;
+
+        ID NAME                 PERCENTAGE LOCATION             DATEOFBIR       FEES
+---------- -------------------- ---------- -------------------- --------- ----------
+         1 Ram                          88 Delhi                07-JAN-23     100000
+         2 Sam                          98 Gurgram              01-OCT-23     200000
+         3 Jan                          78 Chennai              06-NOV-00     500000
+         4 Pan                          88 Pune                 09-JAN-00     450000
+         5 Ran                          58 Mumbai               26-DEC-01    1500000
+         6 Zan                          76 Banglore             01-FEB-98     650000
+
+6 rows selected.
